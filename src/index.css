@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,600;1,700;1,800;1,900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-newsreader: "Newsreader", ui-serif, Georgia, serif;
+
+  --color-paper: #FEF9EB;
+  --color-paper-dark: #EBE4D5;
+  --color-ink: #1a1a1a;
+  --color-ink-light: #4a4a4a;
+  --color-blood: #7a2828;
+  --color-blood-hover: #5a1c1c;
+}
+
+@layer base {
+  body {
+    @apply bg-paper text-ink font-serif antialiased;
+  }
+}
