@@ -3,7 +3,7 @@ import { collection, onSnapshot, query, deleteDoc, doc } from 'firebase/firestor
 import { db } from '../firebase';
 import { handleFirestoreError, OperationType } from '../lib/firestore-errors';
 import { formatDistanceToNow } from 'date-fns';
-import { ExternalLink, ChevronDown, ChevronUp, Users, AlertTriangle, Trash2 } from 'lucide-react';
+import { ExternalLink, ChevronDown, ChevronUp, Users, AlertTriangle, Trash2, Copy, Check } from 'lucide-react';
 
 interface FnFDashboardProps {
   profileId: string;
@@ -51,6 +51,14 @@ export function FnFDashboard({ profileId }: FnFDashboardProps) {
   const [expandedWallet, setExpandedWallet] = useState<string | null>(null);
   const [expandedCluster, setExpandedCluster] = useState<string | null>(null);
   const [tokenToDelete, setTokenToDelete] = useState<string | null>(null);
+  const [copiedWalletId, setCopiedWalletId] = useState<string | null>(null);
+
+  const handleCopy = (e: React.MouseEvent, text: string) => {
+    e.stopPropagation();
+    navigator.clipboard.writeText(text);
+    setCopiedWalletId(text);
+    setTimeout(() => setCopiedWalletId(null), 2000);
+  };
 
   useEffect(() => {
     if (!profileId) return;
@@ -352,9 +360,18 @@ export function FnFDashboard({ profileId }: FnFDashboardProps) {
                                 {cluster.wallets.map(w => (
                                   <li key={w.id} className="flex items-center justify-between">
                                     <span className="font-mono text-sm text-blood">{formatAddress(w.id)}</span>
-                                    <a href={`https://gmgn.ai/sol/address/${w.id}`} target="_blank" rel="noopener noreferrer" className="text-ink-light hover:text-blood">
-                                      <ExternalLink className="h-4 w-4" />
-                                    </a>
+                                    <div className="flex items-center space-x-3">
+                                      <button 
+                                        onClick={(e) => handleCopy(e, w.id)}
+                                        className="text-ink-light hover:text-blood transition-colors"
+                                        title="Copy Wallet Address"
+                                      >
+                                        {copiedWalletId === w.id ? <Check className="h-4 w-4 text-green-600" /> : <Copy className="h-4 w-4" />}
+                                      </button>
+                                      <a href={`https://gmgn.ai/sol/address/${w.id}`} target="_blank" rel="noopener noreferrer" className="text-ink-light hover:text-blood" title="View on GMGN">
+                                        <ExternalLink className="h-4 w-4" />
+                                      </a>
+                                    </div>
                                   </li>
                                 ))}
                               </ul>
@@ -433,12 +450,20 @@ export function FnFDashboard({ profileId }: FnFDashboardProps) {
                                 <div className="text-sm font-mono text-blood font-bold">
                                   {formatAddress(wallet.id)}
                                 </div>
+                                <button 
+                                  onClick={(e) => handleCopy(e, wallet.id)}
+                                  className="ml-3 text-ink-light hover:text-blood transition-colors"
+                                  title="Copy Wallet Address"
+                                >
+                                  {copiedWalletId === wallet.id ? <Check className="h-4 w-4 text-green-600" /> : <Copy className="h-4 w-4" />}
+                                </button>
                                 <a 
                                   href={`https://gmgn.ai/sol/address/${wallet.id}`} 
                                   target="_blank" 
                                   rel="noopener noreferrer"
-                                  className="ml-3 text-ink-light hover:text-blood transition-colors"
+                                  className="ml-2 text-ink-light hover:text-blood transition-colors"
                                   onClick={(e) => e.stopPropagation()}
+                                  title="View on GMGN"
                                 >
                                   <ExternalLink className="h-4 w-4" />
                                 </a>
