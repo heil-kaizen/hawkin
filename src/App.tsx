@@ -239,9 +239,17 @@ export default function App() {
       <header className="pt-8 pb-0 border-b-2 border-ink mb-1">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-between items-center sm:items-end gap-4 mb-8">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-black tracking-tighter text-blood uppercase leading-none">
-              SYNDICA
-            </h1>
+            <div className="flex items-center gap-4">
+              <img 
+                src="https://github.com/heil-kaizen/syndica/blob/main/hawkins.webp?raw=true" 
+                alt="HAWKINS Logo" 
+                className="h-12 md:h-[60px] lg:h-[72px] w-auto object-contain rounded-sm"
+                referrerPolicy="no-referrer"
+              />
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-black tracking-tighter text-blood uppercase leading-none">
+                HAWKINS
+              </h1>
+            </div>
             
             <div>
               {user ? (
